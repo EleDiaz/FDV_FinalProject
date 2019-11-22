@@ -18,7 +18,14 @@ public class DialogManager : MonoBehaviour
     public event OnNext onNext;
 
     void Awake() {
+        // TODO: We should hide the UI until a start event is dispatched.
+        //       Also there are sections shouldn't be skipable or that require an event to show 
+        //       new text, like in the bird fly away none text is showed after sometime show new
+        //       text bc an event.
+
         ReadDialogFile();
+        // Cleaning the UI
+        info.text = "";
     }
 
     void Start()

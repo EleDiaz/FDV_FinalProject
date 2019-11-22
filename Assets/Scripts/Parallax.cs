@@ -15,8 +15,11 @@ public class Parallax : MonoBehaviour
         if (cam == null) {
             cam = Camera.main;
         }
+        
 
         startPosition = new Vector2(transform.position.x, transform.position.y);
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.material.mainTextureOffset
 
         Vector3 size = GetComponent<SpriteRenderer>().bounds.size;
         width = size.x;

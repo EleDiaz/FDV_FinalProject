@@ -3,6 +3,7 @@
     <Sections>
         <Section Name="Start">
             <Statements>
+                <!--StartDispatcher="StartTutorial" TimeOut=2 -->
                 <Statement>You are possesing this cat.</Statement>
                 <Statement Dispatcher="Movement">Use the "movementKeys" to control her movement.</Statement>
                 <Statement Dispatcher="ReachLocation">Try to explore and don't let any obstacule interrupts you from do it. Use "jumpKey" to jump.</Statement>

@@ -542,6 +542,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3865460104752854834, guid: d9b1bef1b8efd774bbdb1687587c6e52,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3865460104752854834, guid: d9b1bef1b8efd774bbdb1687587c6e52,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3865460105265868099, guid: d9b1bef1b8efd774bbdb1687587c6e52,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -561,6 +571,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1958337130735963250, guid: d9b1bef1b8efd774bbdb1687587c6e52,
+        type: 3}
+      propertyPath: movementFactorX
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 5087038629873879849, guid: d9b1bef1b8efd774bbdb1687587c6e52,
+        type: 3}
+      propertyPath: movementRelToCamera
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5087038629873879849, guid: d9b1bef1b8efd774bbdb1687587c6e52,
+        type: 3}
+      propertyPath: movementFactorX
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 3865460104018184455, guid: d9b1bef1b8efd774bbdb1687587c6e52,
         type: 3}
@@ -641,16 +666,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayer
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3865460104752854834, guid: d9b1bef1b8efd774bbdb1687587c6e52,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 3865460104752854834, guid: d9b1bef1b8efd774bbdb1687587c6e52,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9b1bef1b8efd774bbdb1687587c6e52, type: 3}
@@ -1197,8 +1212,8 @@ SpriteShapeRenderer:
   m_Sprites:
   - {fileID: 21300000, guid: 02b7c58abf8e98e4f854424cee9c0b96, type: 3}
   m_LocalAABB:
-    m_Center: {x: 8.987674, y: -0.29171872, z: -0.005}
-    m_Extent: {x: 16.776148, y: 2.0432208, z: 0.005}
+    m_Center: {x: 9.073654, y: -0.28499198, z: -0.005}
+    m_Extent: {x: 17.94017, y: 2.0499475, z: 0.005}
 --- !u!4 &2030501333
 Transform:
   m_ObjectHideFlags: 0

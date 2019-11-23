@@ -5,28 +5,30 @@ using UnityEngine;
 public class Parallax : MonoBehaviour
 {
     public Camera cam = null;
-    public float movementFactor = 1.0f;
-    public bool verticalDisplacement = false;
-    private float width = 0.0f;
-    private float height = 0.0f;
-    private Vector2 startPosition;
+    /// Movement relative to camera movement
+    public float movementRelToCamera = 1.0f;
+    /// Movement of the texture by itself, like clouds moving at the background while the camera is locked
+    public float movementFactorX = 0.0f;
+    public float movementFactorY = 0.0f;
+
+    /// Offset carried.
+    /// TODO: Overflows? it is to hard to get there? 
+    private Vector2 _offset;
+    /// Last camera position to get the new displacement
+    private Vector2 _lastCameraPos;
+    /// TODO: Take a look at the performance of mainTextureOffset and if it should better a custom shader
+    private MeshRenderer _renderer;
 
     void Awake() {
         if (cam == null) {
             cam = Camera.main;
         }
+
+        _lastCameraPos = new Vector2(cam.transform.position.x, cam.transform.position.y);
         
+        _renderer = GetComponent<MeshRenderer>();
 
-        startPosition = new Vector2(transform.position.x, transform.position.y);
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.material.mainTextureOffset
-
-        Vector3 size = GetComponent<SpriteRenderer>().bounds.size;
-        width = size.x;
-        height = size.y;
-        Debug.Log(size);
-        Debug.Log("Start Pos" + startPosition);
-        Debug.Log("Cam Pos" + cam.transform.position);
+        _offset = new Vector2();
     }
 
     void Start()
@@ -35,42 +37,13 @@ public class Parallax : MonoBehaviour
 
     void Update()
     {
-        float horizontalDist = cam.transform.position.x * movementFactor;
-        float verticalDist = cam.transform.position.y * movementFactor;
-        float hTemp = (cam.transform.position.x * (1 - movementFactor));
-        float vTemp = (cam.transform.position.y * (1 - movementFactor));
-        
-        // width >= abs(cam.transform.position.x * movementFactor - transform.position.x) // reset position
-        // reset position transform.position.x += width * movementFactor
-        transform.position = new Vector3(startPosition.x + horizontalDist, startPosition.y + verticalDist, transform.position.z);
-        if (hTemp > startPosition.x + width) startPosition.x += width;
-        else if (hTemp < startPosition.x - width) startPosition.x -= width;
+        Vector2 newCameraPos = new Vector2(cam.transform.position.x, cam.transform.position.y);
+        Vector2 distance = newCameraPos - _lastCameraPos;
+        _lastCameraPos = newCameraPos; 
 
-        if (vTemp > startPosition.y + height) startPosition.y += height;
-        else if (vTemp < startPosition.y - height) startPosition.y -= height;
+        transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, transform.position.z);
 
-        // if (width / 2 <= cam.transform.position.x - transform.position.x) {
-        //     Debug.Log("changed width");
-        //     // Debug.Log("Distance" + (cam.transform.position.x * movementFactor - transform.position.x));
-        //     transform.position += new Vector3(width, 0.0f, 0.0f); 
-        //     startPosition.x += width;
-        // }
-        // if (-width/2 >= cam.transform.position.x - transform.position.x) {
-        //     Debug.Log("changed -width");
-        //     // Debug.Log("Distance " + (cam.transform.position.x * movementFactor - transform.position.x));
-        //     //transform.position -= new Vector3(horizontalDist + width, 0.0f, 0.0f); 
-        //     startPosition.x -= width;
-        // }
-
-        // if (verticalDisplacement) {
-        //     float verticalDist = cam.transform.position.y * movementFactor;
-
-        //     if (verticalDist >= height + transform.position.y) {
-        //         transform.position += new Vector3(0.0f, verticalDist + height, 0.0f); 
-        //     }
-        //     if (verticalDist >= height - transform.position.x) {
-        //         transform.position -= new Vector3(0.0f, verticalDist + height, 0.0f); 
-        //     }
-        // }
+        _offset += distance * movementRelToCamera + new Vector2(movementFactorX * Time.deltaTime, movementFactorY * Time.deltaTime);
+        _renderer.material.mainTextureOffset = _offset;
     }
 }

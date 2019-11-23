@@ -14,9 +14,6 @@ public class DialogManager : MonoBehaviour
     public TextAsset dialogFile;
     private Dialog dialog;
 
-    public delegate string OnNext(string eventName);
-    public event OnNext onNext;
-
     void Awake() {
         // TODO: We should hide the UI until a start event is dispatched.
         //       Also there are sections shouldn't be skipable or that require an event to show 
@@ -26,6 +23,7 @@ public class DialogManager : MonoBehaviour
         ReadDialogFile();
         // Cleaning the UI
         info.text = "";
+        skipButton.gameObject.SetActive(false);
     }
 
     void Start()
@@ -33,10 +31,7 @@ public class DialogManager : MonoBehaviour
         skipButton.onClick.AddListener(SkipInfo);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
+
 
     void SkipInfo() {
         info.text = dialog.GetNextPhrase(null);

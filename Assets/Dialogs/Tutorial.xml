@@ -3,14 +3,13 @@
     <Sections>
         <Section Name="Start">
             <Statements>
-                <!--StartDispatcher="StartTutorial" TimeOut=2 -->
-                <Statement>You are possesing this cat.</Statement>
-                <Statement Dispatcher="Movement">Use the "movementKeys" to control her movement.</Statement>
-                <Statement Dispatcher="ReachLocation">Try to explore and don't let any obstacule interrupts you from do it. Use "jumpKey" to jump.</Statement>
-                <Statement Dispatcher="OnBranch">With "climbKeys" you can control the climb. And with "movementKeys" you can take a branch way.</Statement>
-                <Statement Dispatcher="BirdFlyingAway">Look at the sky is an amazing night.</Statement>
-                <Statement Dispatcher="WolfCall">But take care you are in a risky place.</Statement>
-                <Statement Dispatcher="BreakBranch BabyCrying">Take a look of your kittens they could bring the attention of some other animals.</Statement>
+                <Statement TriggerStart="Start" TimeOut=2.0>You are possesing this cat.</Statement>
+                <Statement TriggerEnd="Movement">Use the "movementKeys" to control her movement.</Statement>
+                <Statement TriggerEnd="ReachLocation">Try to explore and don't let any obstacule interrupts you from do it. Use "jumpKey" to jump.</Statement>
+                <Statement TriggerEnd="OnBranch">With "climbKeys" you can control the climb. And with "movementKeys" you can take a branch way.</Statement>
+                <Statement TriggerStart="BirdFlyingAway">Look at the sky is an amazing night.</Statement>
+                <Statement TriggerStart="WolfCall">But take care you are in a risky place.</Statement>
+                <Statement TriggerEnd="BabyCrying" TimeOut=5.0>Take a look of your kittens they could bring the attention of some other animals.</Statement>
                 <Statement Dispatcher="">
                 </Statement>
             </Statements>

@@ -575,7 +575,7 @@ PrefabInstance:
     - target: {fileID: 1958337130735963250, guid: d9b1bef1b8efd774bbdb1687587c6e52,
         type: 3}
       propertyPath: movementFactorX
-      value: 0.005
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 5087038629873879849, guid: d9b1bef1b8efd774bbdb1687587c6e52,
         type: 3}
@@ -585,7 +585,7 @@ PrefabInstance:
     - target: {fileID: 5087038629873879849, guid: d9b1bef1b8efd774bbdb1687587c6e52,
         type: 3}
       propertyPath: movementFactorX
-      value: 0.001
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3865460104018184455, guid: d9b1bef1b8efd774bbdb1687587c6e52,
         type: 3}
@@ -666,6 +666,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4773080674597403309, guid: d9b1bef1b8efd774bbdb1687587c6e52,
+        type: 3}
+      propertyPath: movementFactorY
+      value: -0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9b1bef1b8efd774bbdb1687587c6e52, type: 3}

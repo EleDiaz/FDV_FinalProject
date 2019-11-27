@@ -31,10 +31,20 @@ public class DialogManager : MonoBehaviour
         skipButton.onClick.AddListener(SkipInfo);
     }
 
-
+    void EventDispatched(string eventName) {
+        Section.StatementInfo statementInfo = dialog.GetNextPhrase(eventName);
+        if (statementInfo != null) {
+            Statement statement = statementInfo.statement;
+            if (statement.TimeOut != 0) {
+                MakeTimer(statementInfo);
+            }
+            skipButton.gameObject.SetActive(statement.Skippable);
+            info.text = statement.Phrase;
+        }
+    }
 
     void SkipInfo() {
-        info.text = dialog.GetNextPhrase(null);
+        EventDispatched("Skip");
     }
 
     private void ReadDialogFile() {
@@ -55,5 +65,16 @@ public class DialogManager : MonoBehaviour
         settings.IgnoreComments = true;
         dialog = (Dialog) serializer.
             Deserialize(XmlReader.Create(new StringReader(dialogFile.text), settings));
+        
+    }
+
+    private IEnumerator SetTimer(Section.StatementInfo statementInfo) {
+        yield return new WaitForSeconds(statementInfo.statement.TimeOut);
+        statementInfo.TimeOutEnded();
+        // TODO: Checkout for event queue
+    }
+
+    private void MakeTimer(Section.StatementInfo statementInfo) {
+        StartCoroutine(SetTimer(statementInfo));
     }
 }

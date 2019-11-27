@@ -8,16 +8,14 @@ using UnityEngine;
 [XmlRoot("Dialog", IsNullable = false)]
 public class Dialog
 {
-
     [XmlArray("Sections")]
     public Section[] Sections;
 
     [XmlIgnore]
     private int _currentSection = 0;
 
-    public string GetNextPhrase(string eventName) {
-        Statement statement = Sections[_currentSection].TryGetFollowing(eventName);
-        return statement != null ? statement.Phrase : null;
+    public Section.StatementInfo GetNextPhrase(string eventName) {
+        return Sections[_currentSection].TryGetFollowing(eventName);
     }
 
     public bool openSection(string name) {
@@ -35,7 +33,7 @@ public class Dialog
 }
 
 // NOTE: Enumerator, Enumerables or iterator doesn't fill all the functionality. MoveNext(string EventName) 
-public class Section : MonoBehaviour
+public class Section
 {
     [XmlAttribute]
     public string Name;
@@ -50,22 +48,25 @@ public class Section : MonoBehaviour
     [XmlIgnore]
     private bool triggeredEnd = true;
 
-    public delegate void OnTimeOut(Statement statement);
-    private event OnTimeOut onTimeOut; 
+    // This allows to return the statement and a function to setup in some cases. 
+    public class StatementInfo {
+        public Statement statement;
+        private Section _section;
 
-
-    private IEnumerator SetTimer(float timeOut) {
-        yield return new WaitForSeconds(timeOut);
-        _timeOutEnded = true;
-        // TODO: Checkout for event queue
-        onTimeOut(Statements[_currentIndex]);
+        public StatementInfo(Section self) {
+            _section = self;
+        }
+        
+        public void TimeOutEnded() {
+            _section._timeOutEnded = true;
+        }
     }
 
-
-    public Statement TryGetFollowing(string eventName) {
+    public StatementInfo TryGetFollowing(string eventName) {
         if (_currentIndex >= Statements.Length - 1) {
             return null;
         }
+        StatementInfo statementInfo = new StatementInfo(this);
 
         Statement currentStatement = Statements[_currentIndex];
         Statement statement = Statements[_currentIndex + 1];
@@ -74,16 +75,16 @@ public class Section : MonoBehaviour
             || (_timeOutEnded && triggeredEnd && eventName == statement.TriggerStart)
             || (_timeOutEnded && triggeredEnd && eventName == null)) 
         {
-            if (currentStatement.TimeOut.HasValue) {
+            statementInfo.statement = statement;
+            if (currentStatement.TimeOut != 0) {
                 _timeOutEnded = false;
-                StartCoroutine(SetTimer(currentStatement.TimeOut.Value));
             }
             if (currentStatement.TriggerEnd != null) {
                 triggeredEnd = false;
             }
 
             _currentIndex++;
-            return statement;
+            return statementInfo;
         }
         else if (currentStatement.TriggerEnd == eventName) {
             triggeredEnd = true;
@@ -106,7 +107,7 @@ public class Statement
     public bool Skippable;
     /// Time out fade out the text
     [XmlAttribute]
-    public float? TimeOut;
+    public float TimeOut;
 
     // TODO: We should replace this type with some kind StyledText generator, which parse input string and lookup for translations
     //       and necessary icons.  

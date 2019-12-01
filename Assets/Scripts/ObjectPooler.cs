@@ -17,7 +17,7 @@ public class ObjectPooler : MonoBehaviour
     // We use an array to get fastest access.
     private GameObject[] _poolObject;
 
-    public void Start() {
+    public void Awake() {
         _poolObject = new GameObject[poolSize];
         for (int i = 0; i < poolSize; i++)
         {
@@ -42,6 +42,7 @@ public class ObjectPooler : MonoBehaviour
             // TODO: Maybe a we should use a chunk.
             Array.Resize(ref _poolObject, _poolObject.Length + 1);
             _poolObject[_poolObject.Length - 1] = (GameObject) Instantiate(objectProbe);
+            return _poolObject[_poolObject.Length -1];
         }
         return null;
     }
